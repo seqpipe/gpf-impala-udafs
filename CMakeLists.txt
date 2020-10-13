@@ -49,5 +49,5 @@ endif(CLANG_EXECUTABLE)
 
 # This is an example of how to use the test harness to help develop UDF and UDAs.
 target_link_libraries(gpfuda ImpalaUdf)
-#add_executable(uda-sample-test uda-sample-test.cc)
-#target_link_libraries(uda-sample-test gpfuda)
+add_executable(gpf_uda_test gpf_uda_test.cc)
+target_link_libraries(gpf_uda_test gpfuda)
