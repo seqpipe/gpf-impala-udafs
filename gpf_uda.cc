@@ -3,7 +3,6 @@
 #include <sstream>
 
 using namespace impala_udf;
-using namespace std;
 
 // ---------------------------------------------------------------------------
 // FIRST function. Simply returns the first value found.
