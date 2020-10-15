@@ -63,7 +63,7 @@ BooleanVal OrFinalize(FunctionContext* context, const BooleanVal& val) {
 
 
 // ---------------------------------------------------------------------------
-// BITOR function. Applies OR to aggregated BOOLEAN columns
+// BITOR function. Applies bitwise OR to aggregated integer columns
 // ---------------------------------------------------------------------------
 
 void BitOrInit(FunctionContext* context, BigIntVal* val) {
@@ -89,5 +89,34 @@ void BitOrMerge(FunctionContext* context, const BigIntVal& src, BigIntVal* dst) 
 }
 
 BigIntVal BitOrFinalize(FunctionContext* context, const BigIntVal& val) {
+    return val;
+}
+
+// ---------------------------------------------------------------------------
+// OR function. Applies OR to aggregated integer columns
+// ---------------------------------------------------------------------------
+//
+void OrIntInit(FunctionContext* context, BooleanVal* val) {
+    val->is_null = false;
+    val->val = false;
+}
+
+void OrIntUpdate(FunctionContext* context, const IntVal& input, BooleanVal* val) {
+    if (input.is_null) {
+        return;
+    }
+
+    val->val = val->val || input.val;
+}
+
+void OrIntMerge(FunctionContext* context, const BooleanVal& src, BooleanVal* dst) {
+    if(src.is_null) {
+        return;
+    }
+
+    dst->val = dst->val || src.val;
+}
+
+BooleanVal OrIntFinalize(FunctionContext* context, const BooleanVal& val) {
     return val;
 }

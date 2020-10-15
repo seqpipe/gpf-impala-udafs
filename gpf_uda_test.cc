@@ -82,6 +82,71 @@ bool TestOr() {
     return true;
 }
 
+bool TestOrInt() {
+    UdaTestHarness<BooleanVal, BooleanVal, IntVal> test(
+        OrIntInit, OrIntUpdate, OrIntMerge, NULL, OrIntFinalize
+    );
+
+    std::vector<IntVal> empty;
+    if(!test.Execute(empty, BooleanVal(false))) {
+        std::cerr << "Or empty:" << test.GetErrorMsg() << std::endl;
+        return false;
+    }
+
+    std::vector<IntVal> sample1;
+    sample1.push_back(IntVal(0));
+    sample1.push_back(IntVal(1));
+    sample1.push_back(IntVal(0));
+    sample1.push_back(IntVal(1));
+    if(!test.Execute(sample1, BooleanVal(true))) {
+        std::cerr << "Or int sample1:" << test.GetErrorMsg() << std::endl;
+        return false;
+    }
+
+    std::vector<IntVal> sample2;
+    sample2.push_back(IntVal(1));
+    sample2.push_back(IntVal(0));
+    sample2.push_back(IntVal(1));
+    sample2.push_back(IntVal(0));
+
+    if(!test.Execute(sample2, BooleanVal(true))) {
+        std::cerr << "Or int sample2:" << test.GetErrorMsg() << std::endl;
+        return false;
+    }
+
+    std::vector<IntVal> sample3;
+    sample3.push_back(IntVal(4));
+    sample3.push_back(IntVal(-1));
+    sample3.push_back(IntVal(0));
+    sample3.push_back(IntVal(9));
+
+    if(!test.Execute(sample3, BooleanVal(true))) {
+        std::cerr << "Or int sample3:" << test.GetErrorMsg() << std::endl;
+        return false;
+    }
+
+    std::vector<IntVal> allTrue(10, IntVal(1));
+    if(!test.Execute(allTrue, BooleanVal(true))) {
+        std::cerr << "Or int all true:" << test.GetErrorMsg() << std::endl;
+        return false;
+    }
+
+    std::vector<IntVal> allFalse(10, IntVal(0));
+    if(!test.Execute(allFalse, BooleanVal(false))) {
+        std::cerr << "Or int all false:" << test.GetErrorMsg() << std::endl;
+        return false;
+    }
+
+    std::vector<IntVal> allNull(10, IntVal::null());
+    if(!test.Execute(allNull, BooleanVal(false))) {
+        std::cerr << "Or int all null:" << test.GetErrorMsg() << std::endl;
+        return false;
+    }
+
+    return true;
+}
+
+
 bool TestBitOr() {
     UdaTestHarness<BigIntVal, BigIntVal, BigIntVal> test(
         BitOrInit, BitOrUpdate, BitOrMerge, NULL, BitOrFinalize
@@ -139,6 +204,7 @@ int main(int argc, char** argv) {
   passed &= TestFirst();
   passed &= TestOr();
   passed &= TestBitOr();
+  passed &= TestOrInt();
   std::cerr << (passed ? "Tests passed." : "Tests failed.") << std::endl;
   if(passed) {
       return 0;
