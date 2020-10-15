@@ -10,5 +10,15 @@ void FirstUpdate(FunctionContext* context, const StringVal& input, StringVal* va
 void FirstMerge(FunctionContext* context, const StringVal& src, StringVal* dst);
 StringVal FirstFinalize(FunctionContext* context, const StringVal& val);
 
+void OrInit(FunctionContext* context, BooleanVal* val);
+void OrUpdate(FunctionContext* context, const BooleanVal& input, BooleanVal* val);
+void OrMerge(FunctionContext* context, const BooleanVal& src, BooleanVal* dst);
+BooleanVal OrFinalize(FunctionContext* context, const BooleanVal& val);
+
+
+void BitOrInit(FunctionContext* context, BigIntVal* val);
+void BitOrUpdate(FunctionContext* context, const BigIntVal& input, BigIntVal* val);
+void BitOrMerge(FunctionContext* context, const BigIntVal& src, BigIntVal* dst);
+BigIntVal BitOrFinalize(FunctionContext* context, const BigIntVal& val);
 
 #endif

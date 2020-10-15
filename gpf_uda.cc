@@ -34,3 +34,61 @@ StringVal FirstFinalize(FunctionContext* context, const StringVal& val) {
     return result;
 }
 
+
+// ---------------------------------------------------------------------------
+// OR function. Applies OR to aggregated BOOLEAN columns
+// ---------------------------------------------------------------------------
+void OrInit(FunctionContext* context, BooleanVal* val) {
+    val->is_null = false;
+    val->val = false;
+}
+
+void OrUpdate(FunctionContext* context, const BooleanVal& input, BooleanVal* val) {
+    if(input.is_null) {
+        return;
+    }
+
+    val->val = val->val || input.val;
+}
+
+void OrMerge(FunctionContext* context, const BooleanVal& src, BooleanVal* dst) {
+    if(src.is_null) {
+        return;
+    }
+    dst->val = dst->val || src.val;
+}
+
+BooleanVal OrFinalize(FunctionContext* context, const BooleanVal& val) {
+    return val;
+}
+
+
+// ---------------------------------------------------------------------------
+// BITOR function. Applies OR to aggregated BOOLEAN columns
+// ---------------------------------------------------------------------------
+
+void BitOrInit(FunctionContext* context, BigIntVal* val) {
+    val->is_null = false;
+    val->val = 0;
+}
+
+void BitOrUpdate(FunctionContext* context, const BigIntVal& input, BigIntVal* val) {
+    if(input.is_null) {
+        return;
+    }
+
+    val->val = val->val | input.val;
+}
+
+void BitOrMerge(FunctionContext* context, const BigIntVal& src, BigIntVal* dst) {
+    if(src.is_null) {
+        return;
+    }
+
+    dst->val = dst->val | src.val;
+
+}
+
+BigIntVal BitOrFinalize(FunctionContext* context, const BigIntVal& val) {
+    return val;
+}
