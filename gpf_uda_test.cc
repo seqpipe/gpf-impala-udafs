@@ -206,7 +206,6 @@ int main(int argc, char** argv) {
   passed &= TestBitOr();
   passed &= TestOrInt();
   std::cerr << (passed ? "Tests passed." : "Tests failed.") << std::endl;
-  return -1;
   if(passed) {
       return 0;
   }
