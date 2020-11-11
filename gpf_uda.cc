@@ -14,7 +14,9 @@ void FirstInit(FunctionContext* context, StringVal* val) {
 void FirstUpdate(FunctionContext* context, const StringVal& str, StringVal* result) {
     if (str.is_null) return;
     if (result->is_null) {
-        *result = StringVal::CopyFrom(context, str.ptr, str.len);
+        uint8_t *copy = context->Allocate(str.len);
+        memcpy(copy, str.ptr, str.len);
+        *result = StringVal(copy, str.len);
     }
 }
 
@@ -22,7 +24,9 @@ void FirstMerge(FunctionContext* context, const StringVal& src, StringVal* dst) 
     if(!dst->is_null || src.is_null) {
         return;
     }
-    *dst = StringVal::CopyFrom(context, src.ptr, src.len);
+    uint8_t *copy = context->Allocate(src.len);
+    memcpy(copy, src.ptr, src.len);
+    *dst = StringVal(copy, src.len);
 }
 
 StringVal FirstFinalize(FunctionContext* context, const StringVal& val) {
@@ -30,6 +34,7 @@ StringVal FirstFinalize(FunctionContext* context, const StringVal& val) {
         return StringVal::null();
     }
     StringVal result = StringVal::CopyFrom(context, val.ptr, val.len);
+    context->Free(val.ptr);
     return result;
 }
 
