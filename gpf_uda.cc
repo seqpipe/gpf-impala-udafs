@@ -29,6 +29,15 @@ void FirstMerge(FunctionContext* context, const StringVal& src, StringVal* dst) 
     *dst = StringVal(copy, src.len);
 }
 
+StringVal FirstSerialize(FunctionContext* context, const StringVal& val) {
+    if(val.is_null) {
+        return StringVal::null();
+    }
+    StringVal result = StringVal::CopyFrom(context, val.ptr, val.len);
+    context->Free(val.ptr);
+    return result;
+}
+
 StringVal FirstFinalize(FunctionContext* context, const StringVal& val) {
     if(val.is_null) {
         return StringVal::null();

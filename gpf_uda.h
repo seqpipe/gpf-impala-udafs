@@ -8,6 +8,7 @@ using namespace impala_udf;
 void FirstInit(FunctionContext* context, StringVal* val);
 void FirstUpdate(FunctionContext* context, const StringVal& input, StringVal* val);
 void FirstMerge(FunctionContext* context, const StringVal& src, StringVal* dst);
+StringVal FirstSerialize(FunctionContext* context, const StringVal& val);
 StringVal FirstFinalize(FunctionContext* context, const StringVal& val);
 
 void OrInit(FunctionContext* context, BooleanVal* val);

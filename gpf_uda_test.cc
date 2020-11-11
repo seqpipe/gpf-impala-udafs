@@ -9,7 +9,7 @@ using namespace impala_udf;
 
 bool TestFirst() {
     UdaTestHarness<StringVal, StringVal, StringVal> test(
-        FirstInit, FirstUpdate, FirstMerge, NULL, FirstFinalize
+        FirstInit, FirstUpdate, FirstMerge, FirstSerialize, FirstFinalize
     );
 
     std::vector<StringVal> empty;
